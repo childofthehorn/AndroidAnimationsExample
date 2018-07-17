@@ -5,9 +5,7 @@ package com.stacydevino.androidanimationexample
     Yes, we are puposely showing BAD EXAMPLES that are generally code-sound.
  */
 
-import android.animation.Animator
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
+import android.animation.*
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.support.v7.app.AppCompatActivity
@@ -26,6 +24,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var isObjectAnimator = false
     private var isXML = true //default state
     private var isAnimation = false
+    private var isPropValHolder = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +42,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             isAnimate = false
             isAnimation = false
             isObjectAnimator = false
+            isPropValHolder = false
             button.background.setColorFilter(Color.CYAN, PorterDuff.Mode.MULTIPLY)
             button2.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
             button3.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
             button4.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
+            button5.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
             resetFab()
         })
         button2.setOnClickListener({
@@ -54,10 +55,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             isAnimate = true
             isAnimation = false
             isObjectAnimator = false
+            isPropValHolder = false
             button.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
             button2.background.setColorFilter(Color.CYAN, PorterDuff.Mode.MULTIPLY)
             button3.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
             button4.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
+            button5.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
             resetFab()
         })
         button3.setOnClickListener({
@@ -65,10 +68,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             isAnimate = false
             isAnimation = true
             isObjectAnimator = false
+            isPropValHolder = false
             button.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
             button2.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
             button3.background.setColorFilter(Color.CYAN, PorterDuff.Mode.MULTIPLY)
             button4.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
+            button5.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
             resetFab()
         })
         button4.setOnClickListener({
@@ -76,12 +81,41 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             isAnimate = false
             isAnimation = false
             isObjectAnimator = true
-            button4.isSelected = true
+            isPropValHolder = false
             button.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
             button2.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
             button3.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
             button4.background.setColorFilter(Color.CYAN, PorterDuff.Mode.MULTIPLY)
+            button5.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
             resetFab()
+        })
+        button5.setOnClickListener({
+            isXML = false
+            isAnimate = false
+            isAnimation = false
+            isObjectAnimator = false
+            isPropValHolder = true
+            button.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
+            button2.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
+            button3.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
+            button4.background.setColorFilter(Color.LTGRAY, PorterDuff.Mode.MULTIPLY)
+            button5.background.setColorFilter(Color.CYAN, PorterDuff.Mode.MULTIPLY)
+            resetFab()
+        })
+
+        //Example of Text Color Animator
+        button6.setOnClickListener({
+            var textColor = button5.currentTextColor
+            var textColorOld = textColor
+            if(textColor == Color.MAGENTA){
+                textColor = Color.BLACK
+            } else {
+                textColor = Color.MAGENTA
+            }
+            val txtColorAnim = ObjectAnimator.ofInt(button6, "textColor", textColorOld , textColor)
+            txtColorAnim.duration = 500
+            txtColorAnim.setEvaluator(ArgbEvaluator())
+            txtColorAnim.start()
         })
     }
 
@@ -98,8 +132,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             if (isAnimate) { animateFABAnim() }
             if (isAnimation) { animateFABAnimation() }
             if (isObjectAnimator) { animateFABObjectAninator() }
+            if (isPropValHolder) { animateFABPropValues() }
         } else if (id == R.id.fab2) {
+            //Fab1 and Fab 2 "look" like they should give the same result, but that is confusing!
+            fab2.animate().rotation(360f).setDuration(500).setInterpolator(DecelerateInterpolator()).start()
+
+            //This is even more interesting because of what it does to the object
+            //fab2.animate().rotationBy(360f).setDuration(500).setInterpolator(DecelerateInterpolator()).start()
         } else if (id == R.id.fab1) {
+            val rotateAnim = RotateAnimation(0f, 360f)
+            rotateAnim.interpolator = DecelerateInterpolator()
+            rotateAnim.duration = 500
+            fab1.startAnimation(rotateAnim)
         }
     }
 
@@ -226,13 +270,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             scaleDownY.duration = 300
             scaleDownX.addListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animation: Animator) {}
-
                 override fun onAnimationEnd(animation: Animator) {
                     fab1.visibility = View.GONE
                 }
 
                 override fun onAnimationCancel(animation: Animator) {}
-
                 override fun onAnimationRepeat(animation: Animator) {}
             })
 
@@ -300,6 +342,99 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 override fun onAnimationRepeat(animation: Animator) {}
             })
             animatorInSet.playTogether(scaleUpX, scaleUpY, fadeIn, scaleUpX2, scaleUpY2, fadeIn2)
+            animatorInSet.start()
+            fab1.setClickable(true)
+            fab2.setClickable(true)
+            isFabOpen = true
+        }
+    }
+
+    fun animateFABPropValues(){
+        if (isFabOpen){
+            val animatorOutSet = AnimatorSet()
+
+            //Define our properties here and once!
+            val scaleDownX = PropertyValuesHolder.ofFloat("scaleX", 0.0f)
+            val scaleDownY = PropertyValuesHolder.ofFloat("scaleY", 0.0f)
+            val fadeOut = PropertyValuesHolder.ofFloat( "alpha", 1f, 0.0f)
+
+            //Fab1
+            val animatorScaleOut = ObjectAnimator.ofPropertyValuesHolder( fab1, scaleDownX, scaleDownY)
+            animatorScaleOut.addListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator) {}
+                override fun onAnimationEnd(animation: Animator) {
+                    fab1.visibility = View.GONE
+                }
+                override fun onAnimationCancel(animation: Animator) {}
+                override fun onAnimationRepeat(animation: Animator) {}
+            })
+            animatorScaleOut.interpolator = LinearInterpolator()
+            animatorScaleOut.duration = 300
+            val animatorFadeOut = ObjectAnimator.ofPropertyValuesHolder( fab1, fadeOut)
+            animatorFadeOut.interpolator = AccelerateInterpolator()
+            animatorFadeOut.duration = 300
+
+            //Fab2
+            val animatorScaleOut2 = ObjectAnimator.ofPropertyValuesHolder( fab2, scaleDownX, scaleDownY)
+            animatorScaleOut2.addListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator) {}
+                override fun onAnimationEnd(animation: Animator) {
+                    fab2.visibility = View.GONE
+                }
+                override fun onAnimationCancel(animation: Animator) {}
+                override fun onAnimationRepeat(animation: Animator) {}
+            })
+            animatorScaleOut2.interpolator = LinearInterpolator()
+            animatorScaleOut2.duration = 300
+            val animatorFadeOut2 = ObjectAnimator.ofPropertyValuesHolder( fab2, fadeOut)
+            animatorFadeOut2.interpolator = AccelerateInterpolator()
+            animatorFadeOut2.duration = 300
+
+            animatorOutSet.playTogether(animatorScaleOut, animatorFadeOut, animatorScaleOut2, animatorFadeOut2)
+            animatorOutSet.start()
+            fab1.setClickable(false)
+            fab2.setClickable(false)
+            isFabOpen = false
+        } else {
+            val animatorInSet = AnimatorSet()
+
+            val scaleUpX = PropertyValuesHolder.ofFloat( "scaleX", 0.8f)
+            val scaleUpY = PropertyValuesHolder.ofFloat( "scaleY", 0.8f)
+            val fadeIn = PropertyValuesHolder.ofFloat( "alpha", 0f, 1f)
+
+            //Fab1
+            val animatorScaleIn = ObjectAnimator.ofPropertyValuesHolder(fab1, scaleUpX, scaleUpY)
+            animatorScaleIn.addListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator) {
+                    fab1.visibility = View.VISIBLE
+                }
+                override fun onAnimationEnd(animation: Animator) {}
+                override fun onAnimationCancel(animation: Animator) {}
+                override fun onAnimationRepeat(animation: Animator) {}
+            })
+            animatorScaleIn.interpolator = AccelerateInterpolator()
+            animatorScaleIn.duration = 300
+            val animatorFadeIn = ObjectAnimator.ofPropertyValuesHolder(fab1, fadeIn)
+            animatorFadeIn.interpolator = AccelerateInterpolator()
+            animatorFadeIn.duration = 300
+
+            //Fab2
+            val animatorScaleIn2 = ObjectAnimator.ofPropertyValuesHolder(fab2, scaleUpX, scaleUpY)
+            animatorScaleIn2.addListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator) {
+                    fab2.visibility = View.VISIBLE
+                }
+                override fun onAnimationEnd(animation: Animator) {}
+                override fun onAnimationCancel(animation: Animator) {}
+                override fun onAnimationRepeat(animation: Animator) {}
+            })
+            animatorScaleIn2.interpolator = AccelerateInterpolator()
+            animatorScaleIn2.duration = 300
+            val animatorFadeIn2 = ObjectAnimator.ofPropertyValuesHolder(fab2, fadeIn)
+            animatorFadeIn2.interpolator = AccelerateInterpolator()
+            animatorFadeIn2.duration = 300
+
+            animatorInSet.playTogether(animatorScaleIn, animatorFadeIn, animatorScaleIn2, animatorFadeIn2)
             animatorInSet.start()
             fab1.setClickable(true)
             fab2.setClickable(true)
