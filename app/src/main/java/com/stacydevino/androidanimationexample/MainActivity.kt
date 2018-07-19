@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         //Example of Text Color Animator
         button6.setOnClickListener({
-            var textColor = button5.currentTextColor
+            var textColor = button6.currentTextColor
             var textColorOld = textColor
             if(textColor == Color.MAGENTA){
                 textColor = Color.BLACK
@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             if (isXML) { animateFABXML() }
             if (isAnimate) { animateFABAnim() }
             if (isAnimation) { animateFABAnimation() }
-            if (isObjectAnimator) { animateFABObjectAninator() }
+            if (isObjectAnimator) { animateFABObjectAnimator() }
             if (isPropValHolder) { animateFABPropValues() }
         } else if (id == R.id.fab2) {
             //Fab1 and Fab 2 "look" like they should give the same result, but that is confusing!
@@ -254,7 +254,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    fun animateFABObjectAninator(){
+    fun animateFABObjectAnimator(){
         if (isFabOpen){
             val animatorOutSet = AnimatorSet()
 
