@@ -259,11 +259,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             val animatorOutSet = AnimatorSet()
 
             //Fab1
-            val scaleDownX = ObjectAnimator.ofFloat(fab1, "scaleX", 0.0f)
-            val scaleDownY = ObjectAnimator.ofFloat(fab1, "scaleY", 0.0f)
+            val scaleDownX = ObjectAnimator.ofFloat(fab1, View.SCALE_X, 0.0f)
+            val scaleDownY = ObjectAnimator.ofFloat(fab1, View.SCALE_Y, 0.0f)
             scaleDownX.interpolator = LinearInterpolator()
             scaleDownY.interpolator = LinearInterpolator()
-            val fadeOut = ObjectAnimator.ofFloat(fab1, "alpha", 1f, 0.0f)
+            val fadeOut = ObjectAnimator.ofFloat(fab1, View.ALPHA, 1f, 0.0f)
             fadeOut.interpolator = AccelerateInterpolator()
             fadeOut.duration = 300
             scaleDownX.duration = 300
@@ -279,11 +279,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             })
 
             //Fab2
-            val scaleDownX2 = ObjectAnimator.ofFloat(fab2, "scaleX", 0.0f)
-            val scaleDownY2 = ObjectAnimator.ofFloat(fab2, "scaleY", 0.0f)
+            val scaleDownX2 = ObjectAnimator.ofFloat(fab2, View.SCALE_X, 0.0f)
+            val scaleDownY2 = ObjectAnimator.ofFloat(fab2, View.SCALE_Y, 0.0f)
             scaleDownX2.interpolator = LinearInterpolator()
             scaleDownY2.interpolator = LinearInterpolator()
-            val fadeOut2 = ObjectAnimator.ofFloat(fab2, "alpha", 1f, 0.0f)
+            val fadeOut2 = ObjectAnimator.ofFloat(fab2, View.ALPHA, 1f, 0.0f)
             fadeOut2.interpolator = AccelerateInterpolator()
             fadeOut2.duration = 300
             scaleDownX2.duration = 300
@@ -305,11 +305,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             val animatorInSet = AnimatorSet()
 
             //Fab1
-            val scaleUpX = ObjectAnimator.ofFloat(fab1, "scaleX", 0.8f)
-            val scaleUpY = ObjectAnimator.ofFloat(fab1, "scaleY", 0.8f)
+            val scaleUpX = ObjectAnimator.ofFloat(fab1, View.SCALE_X, 0.8f)
+            val scaleUpY = ObjectAnimator.ofFloat(fab1, View.SCALE_Y, 0.8f)
             scaleUpX.interpolator = LinearInterpolator()
             scaleUpY.interpolator = LinearInterpolator()
-            val fadeIn = ObjectAnimator.ofFloat(fab1, "alpha", 0f, 1f)
+            val fadeIn = ObjectAnimator.ofFloat(fab1, View.ALPHA, 0f, 1f)
             fadeIn.interpolator = AccelerateInterpolator()
             fadeIn.duration = 300
             scaleUpX.duration = 300
@@ -324,11 +324,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             })
 
             //Fab2
-            val scaleUpX2 = ObjectAnimator.ofFloat(fab2, "scaleX", 0.8f)
-            val scaleUpY2 = ObjectAnimator.ofFloat(fab2, "scaleY", 0.8f)
+            val scaleUpX2 = ObjectAnimator.ofFloat(fab2, View.SCALE_X, 0.8f)
+            val scaleUpY2 = ObjectAnimator.ofFloat(fab2, View.SCALE_Y, 0.8f)
             scaleUpX2.interpolator = LinearInterpolator()
             scaleUpY2.interpolator = LinearInterpolator()
-            val fadeIn2 = ObjectAnimator.ofFloat(fab2, "alpha", 0f, 1f)
+            val fadeIn2 = ObjectAnimator.ofFloat(fab2, View.ALPHA, 0f, 1f)
             fadeIn2.interpolator = AccelerateInterpolator()
             fadeIn2.duration = 300
             scaleUpX2.duration = 300
@@ -354,9 +354,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             val animatorOutSet = AnimatorSet()
 
             //Define our properties here and once!
-            val scaleDownX = PropertyValuesHolder.ofFloat("scaleX", 0.0f)
-            val scaleDownY = PropertyValuesHolder.ofFloat("scaleY", 0.0f)
-            val fadeOut = PropertyValuesHolder.ofFloat( "alpha", 1f, 0.0f)
+            val scaleDownX = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.0f)
+            val scaleDownY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.0f)
+            val fadeOut = PropertyValuesHolder.ofFloat( View.ALPHA, 1f, 0.0f)
 
             //Fab1
             val animatorScaleOut = ObjectAnimator.ofPropertyValuesHolder( fab1, scaleDownX, scaleDownY)
@@ -398,9 +398,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else {
             val animatorInSet = AnimatorSet()
 
-            val scaleUpX = PropertyValuesHolder.ofFloat( "scaleX", 0.8f)
-            val scaleUpY = PropertyValuesHolder.ofFloat( "scaleY", 0.8f)
-            val fadeIn = PropertyValuesHolder.ofFloat( "alpha", 0f, 1f)
+            val scaleUpX = PropertyValuesHolder.ofFloat( View.SCALE_X, 0.8f)
+            val scaleUpY = PropertyValuesHolder.ofFloat( View.SCALE_Y, 0.8f)
+            val fadeIn = PropertyValuesHolder.ofFloat( View.ALPHA, 0f, 1f)
 
             //Fab1
             val animatorScaleIn = ObjectAnimator.ofPropertyValuesHolder(fab1, scaleUpX, scaleUpY)
